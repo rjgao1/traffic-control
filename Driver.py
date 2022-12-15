@@ -1,4 +1,4 @@
-from States import Color
+from States import SafetyState
 from TrafficLight import TrafficLight
 from TrafficLightController import TrafficLightController
 import random
@@ -19,10 +19,10 @@ MIN_CAR_ARRIVING, MAX_CAR_ARRIVING = 0, 5
 
 
 controller = TrafficLightController()
-traffic_light_north = TrafficLight()
-traffic_light_south = TrafficLight()
-traffic_light_east = TrafficLight()
-traffic_light_west = TrafficLight()
+traffic_light_north = TrafficLight("North")
+traffic_light_south = TrafficLight("South")
+traffic_light_east = TrafficLight("East")
+traffic_light_west = TrafficLight("West")
 traffic_lights = [traffic_light_north, traffic_light_south, traffic_light_east, traffic_light_west]
 
 def print_states():
@@ -32,7 +32,15 @@ def print_states():
     print(f"North, South: {controller.north.name, controller.south.name}")
     print(f"East, West:   {controller.east.name, controller.west.name}")
 
-
+def format_safety_monitor_outputs(output, name):
+    if name == "North":
+        return output[0], output[2], output[3]
+    if name == "South":
+        return output[1], output[2], output[3]
+    if name == "East":
+        return output[2], output[0], output[1]
+    if name == "West":
+        return output[3], output[0], output[1]
 
 while CLOCK < MAX_CLOCK:
     # all components emit outputs
@@ -47,11 +55,17 @@ while CLOCK < MAX_CLOCK:
     cars = [random.randint(MIN_CAR_ARRIVING, MAX_CAR_ARRIVING) for _ in range(4)]
     # all TrafficLight components handle input
     for i in range(len(traffic_lights)):
+        # Check safety monitor of each traffic light
+        if traffic_lights[i].safety_monitor.update_state(format_safety_monitor_outputs(controller_out, traffic_lights[i].name)) == SafetyState.Danger:
+            print("Traffic Light Simulation has reached Danger state. Halting simulation...")
+            
+
+        # If everything is good, move on
         traffic_lights[i].handle_input((controller_out[i], cars[i]))
     # Controller component handle input
     controller.handle_input(traffic_light_outputs)
 
-    
+
 
     # advance clock
     CLOCK += 1
@@ -66,7 +80,8 @@ while CLOCK < MAX_CLOCK:
     
 
 
-
+if __name__ == "__main__":
+    execute_driver()
 
 
 

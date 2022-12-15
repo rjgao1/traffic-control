@@ -20,38 +20,38 @@ class TrafficLightController:
         self.clock += 1
     
     def handle_input(self, input):
-        northInfo, southInfo, eastInfo, westInfo = input
+        north_info, south_info, east_info, west_info = input
 
-        lightNorth, carsNorth = northInfo
-        lightSouth, carsSouth = southInfo
-        lightEast, carsEast = eastInfo
-        lightWest, carsWest = westInfo
+        light_north, cars_north = north_info
+        light_south, cars_south = south_info
+        light_east, cars_east = east_info
+        light_west, cars_west = west_info
 
-        if lightNorth == Color.Y or lightSouth == Color.Y:
+        if light_north == Color.Y or light_south == Color.Y:
             self.north = Color.R
             self.south = Color.R
             self.east = Color.G
             self.west = Color.G
             return
 
-        if lightEast == Color.Y or lightWest == Color.Y:
+        if light_east == Color.Y or light_west == Color.Y:
             self.north = Color.G
             self.south = Color.G
             self.east = Color.R
             self.west = Color.R
             return
 
-        if (carsNorth > 0 or carsSouth > 0) and (self.clock % 3 < 2):
-            if lightEast == Color.G or lightSouth == Color.G:
+        if (cars_north > 0 or cars_south > 0) and (self.clock % 3 < 2):
+            if light_east == Color.G or light_south == Color.G:
                 self.east = Color.Y
                 self.west = Color.Y
             return
-        elif (carsEast > 0 or carsWest > 0):
-            if lightNorth == Color.G or lightSouth == Color.G:
+        elif (cars_east > 0 or cars_west > 0):
+            if light_north == Color.G or light_south == Color.G:
                 self.north = Color.Y
                 self.south = Color.Y
             return
-        elif lightEast == Color.G or lightWest == Color.G:
+        elif light_east == Color.G or light_west == Color.G:
             self.east = Color.Y
             self.west = Color.Y
             return
