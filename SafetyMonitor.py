@@ -14,7 +14,7 @@ class SafetyMonitor:
             if currLight == Color.Y:
                 self.state = SafetyState.StateYellow
             elif currLight == Color.R or opposingLight1 != Color.R or opposingLight2 != Color.R:
-                self.state = SafetyState.Danger 
+                self.state = SafetyState.Danger
                 print(f"Traffic Light {self.name} has entered the danger state!")
         elif self.state == SafetyMonitor.StateYellow:
             if currLight == Color.R:

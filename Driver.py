@@ -15,7 +15,7 @@ import time
 
 CLOCK = 0
 MAX_CLOCK = 30
-MIN_CAR_ARRIVING, MAX_CAR_ARRIVING = 0, 5
+MIN_CAR_ARRIVING, MAX_CAR_ARRIVING = 0, 3
 
 
 controller = TrafficLightController()
@@ -26,11 +26,13 @@ traffic_light_west = TrafficLight()
 traffic_lights = [traffic_light_north, traffic_light_south, traffic_light_east, traffic_light_west]
 
 def print_states():
+
     print(f"clock: {CLOCK}")
-    # print(f"North, South: {traffic_light_north.light.name, traffic_light_south.light.name}")
-    # print(f"East, West:   {traffic_light_east.light.name, traffic_light_west.light.name}")
-    print(f"North, South: {controller.north.name, controller.south.name}")
-    print(f"East, West:   {controller.east.name, controller.west.name}")
+    print(f"            NORTH: {traffic_light_north.light.name}, {traffic_light_north.carsWaiting} cars            ")
+    print(f"WEST: {traffic_light_west.light.name}, {traffic_light_west.carsWaiting} cars            EAST: {traffic_light_east.light.name}, {traffic_light_east.carsWaiting} cars")
+    print(f"            SOUTH: {traffic_light_south.light.name}, {traffic_light_south.carsWaiting} cars            ")
+    print("\n\n")
+
 
 
 

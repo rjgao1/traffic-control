@@ -17,6 +17,6 @@ class TrafficLight:
         self.carsWaiting += carsArriving
 
         if self.light == Color.G:
-            self.carsWaiting = max(self.carsWaiting - 3, 0)
+            self.carsWaiting = max(self.carsWaiting - 5, 0)
 
         
