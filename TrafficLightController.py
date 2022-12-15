@@ -33,7 +33,7 @@ class TrafficLightController:
             self.east = Color.G
             self.west = Color.G
 
-        if lightNorth == Color.Y or lightSouth == Color.Y:
+        if lightEast == Color.Y or lightWest == Color.Y:
             self.north = Color.G
             self.south = Color.G
             self.east = Color.R
