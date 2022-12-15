@@ -32,21 +32,26 @@ class TrafficLightController:
             self.south = Color.R
             self.east = Color.G
             self.west = Color.G
+            return
 
         if lightEast == Color.Y or lightWest == Color.Y:
             self.north = Color.G
             self.south = Color.G
             self.east = Color.R
             self.west = Color.R
+            return
 
         if (carsNorth > 0 or carsSouth > 0) and (self.clock % 3 < 2):
             if lightEast == Color.G or lightSouth == Color.G:
                 self.east = Color.Y
                 self.west = Color.Y
+            return
         elif (carsEast > 0 or carsWest > 0):
             if lightNorth == Color.G or lightSouth == Color.G:
                 self.north = Color.Y
                 self.south = Color.Y
+            return
         elif lightEast == Color.G or lightWest == Color.G:
             self.east = Color.Y
             self.west = Color.Y
+            return
