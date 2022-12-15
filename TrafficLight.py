@@ -2,11 +2,12 @@ from States import Color
 from SafetyMonitor import SafetyMonitor
 
 class TrafficLight:
-    def __init__(self, name):
+    def __init__(self, name, max_cars_released):
         # internal states
         self.name = name
         self.light = Color.R
         self.cars_waiting = 0
+        self.max_cars_released = max_cars_released
 
         self.safety_monitor = SafetyMonitor(self.name, self.light)
 
@@ -21,6 +22,6 @@ class TrafficLight:
         self.cars_waiting += cars_arriving
 
         if self.light == Color.G:
-            self.cars_waiting = max(self.cars_waiting - 3, 0)
+            self.cars_waiting = max(self.cars_waiting - self.max_cars_released, 0)
 
         

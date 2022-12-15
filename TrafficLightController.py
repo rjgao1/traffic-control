@@ -1,13 +1,14 @@
 from States import Color
 
 class TrafficLightController:
-    def __init__(self):
+    def __init__(self, buggy=False):
         self.north = Color.G
         self.south = Color.G
         self.east = Color.R
         self.west = Color.R
 
         self.clock = 0
+        self.buggy = buggy
 
     def emit_output(self):
         control_north = self.north
@@ -42,10 +43,16 @@ class TrafficLightController:
             return
 
         if (cars_north > 0 or cars_south > 0) and (self.clock % 3 < 2):
-            if light_east == Color.G or light_west == Color.G:
-                self.east = Color.Y
-                self.west = Color.Y
-            return
+            if not self.buggy:
+                if light_east == Color.G or light_west == Color.G:
+                    self.east = Color.Y
+                    self.west = Color.Y
+                return
+            else:
+                if light_east == Color.G or light_south == Color.G:
+                    self.east = Color.Y
+                    self.west = Color.Y
+                return
         elif (cars_east > 0 or cars_west > 0):
             if light_north == Color.G or light_south == Color.G:
                 self.north = Color.Y

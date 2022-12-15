@@ -3,6 +3,16 @@ from TrafficLight import TrafficLight
 from TrafficLightController import TrafficLightController
 import random
 import time
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--carsReleased", default=5, help="max number of cars released by a traffic light in a clock cycle")
+parser.add_argument("--maxClock", default=30, help="number of clock cycles to run")
+parser.add_argument("--minCarsArriving", default=0, help="min number of cars arriving at a traffic light in a clock cycle")
+parser.add_argument("--maxCarsArriving", default=3, help="max number of cars arriving at a traffic light in a clock cycle")
+parser.add_argument("--buggyController", action="store_true", help="whether or not to execute buggy controller that will cause the safety monitor to fault")
+
+args = parser.parse_args()
 
 # generate traffic load
 # orchestrate interactions
@@ -14,14 +24,14 @@ import time
 # ouput for Controller = (controlNorth, controlSouth, controlEast, controlWest)
 
 CLOCK = 0
-MAX_CLOCK = 30
-MIN_CAR_ARRIVING, MAX_CAR_ARRIVING = 0, 3
+MAX_CLOCK = args.maxClock
+MIN_CAR_ARRIVING, MAX_CAR_ARRIVING = args.minCarsArriving, args.maxCarsArriving
 
-controller = TrafficLightController()
-traffic_light_north = TrafficLight("North")
-traffic_light_south = TrafficLight("South")
-traffic_light_east = TrafficLight("East")
-traffic_light_west = TrafficLight("West")
+controller = TrafficLightController(args.buggyController)
+traffic_light_north = TrafficLight("North", args.carsReleased)
+traffic_light_south = TrafficLight("South", args.carsReleased)
+traffic_light_east = TrafficLight("East", args.carsReleased)
+traffic_light_west = TrafficLight("West", args.carsReleased)
 traffic_lights = [traffic_light_north, traffic_light_south, traffic_light_east, traffic_light_west]
 
 def print_states(cars):
