@@ -25,16 +25,17 @@ traffic_light_east = TrafficLight()
 traffic_light_west = TrafficLight()
 traffic_lights = [traffic_light_north, traffic_light_south, traffic_light_east, traffic_light_west]
 
-def print_states():
-
+def print_states(cars):
     print(f"clock: {CLOCK}")
-    print(f"            NORTH: {traffic_light_north.light.name}, {traffic_light_north.carsWaiting} cars            ")
-    print(f"WEST: {traffic_light_west.light.name}, {traffic_light_west.carsWaiting} cars            EAST: {traffic_light_east.light.name}, {traffic_light_east.carsWaiting} cars")
-    print(f"            SOUTH: {traffic_light_south.light.name}, {traffic_light_south.carsWaiting} cars            ")
+    print(f"                        NORTH: {traffic_light_north.light.name}, cars: {cars[0]} arriving, {traffic_light_north.carsWaiting} remaining           ")
+    print("\n")
+    print(f"WEST: {traffic_light_west.light.name}, cars: {cars[3]} arriving, {traffic_light_west.carsWaiting} remaining            EAST: {traffic_light_east.light.name}, cars: {cars[2]} arriving, {traffic_light_east.carsWaiting} remaining")
+    print("\n")
+    print(f"                        SOUTH: {traffic_light_south.light.name}, cars: {cars[1]} arriving, {traffic_light_south.carsWaiting} remaining            ")
     print("\n\n")
 
 
-
+cars = [0, 0, 0, 0]
 
 while CLOCK < MAX_CLOCK:
     # all components emit outputs
@@ -42,7 +43,7 @@ while CLOCK < MAX_CLOCK:
     traffic_light_outputs = [traffic_light.emit_output() for traffic_light in traffic_lights]
     
     time.sleep(1)
-    print_states()
+    print_states(cars)
     
     # all components handle input
     # make carsArriving for each traffic light
