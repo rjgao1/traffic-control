@@ -8,20 +8,19 @@ class SafetyMonitor:
     def update_state(self, input):
         currLight, opposingLight1, opposingLight2 = input
 
-        print(f"Traffic Light {self.name}: {currLight.name}, {opposingLight1.name}, {opposingLight1.name}")
         if self.state == SafetyState.StateRed:
             self.state = SafetyState.StateGreen if currLight == Color.G else self.state
         elif self.state == SafetyState.StateGreen:
-            if currLight == Color.R or opposingLight1 != Color.R or opposingLight2 != Color.R:
+            if currLight == Color.Y:
+                self.state = SafetyState.StateYellow
+            elif currLight == Color.R or opposingLight1 != Color.R or opposingLight2 != Color.R:
                 self.state = SafetyState.Danger 
                 print(f"Traffic Light {self.name} has entered the danger state!")
-            elif currLight == Color.Y:
-                self.state = SafetyState.StateYellow
         elif self.state == SafetyState.StateYellow:
-            if opposingLight1 != Color.R or opposingLight2 != Color.R:
+            if currLight == Color.R:
+                self.state = SafetyState.StateRed
+            elif opposingLight1 != Color.R or opposingLight2 != Color.R:
                 self.state = SafetyState.Danger
                 print(f"Traffic Light {self.name} has entered the danger state!")
-            elif currLight == Color.R:
-                self.state = SafetyState.StateRed
         
         return self.state

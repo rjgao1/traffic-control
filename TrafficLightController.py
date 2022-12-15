@@ -10,11 +10,11 @@ class TrafficLightController:
         self.clock = 0
 
     def emit_output(self):
-        controlNorth = self.north
-        controlSouth = self.south
-        controlEast = self.east
-        controlWest = self.west
-        return controlNorth, controlSouth, controlEast, controlWest
+        control_north = self.north
+        control_south = self.south
+        control_east = self.east
+        control_west = self.west
+        return control_north, control_south, control_east, control_west
     
     def update_clock(self):
         self.clock += 1
@@ -42,7 +42,7 @@ class TrafficLightController:
             return
 
         if (cars_north > 0 or cars_south > 0) and (self.clock % 3 < 2):
-            if light_east == Color.G or light_south == Color.G:
+            if light_east == Color.G or light_west == Color.G:
                 self.east = Color.Y
                 self.west = Color.Y
             return
