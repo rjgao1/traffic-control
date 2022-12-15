@@ -24,13 +24,14 @@ traffic_light_east = TrafficLight("East")
 traffic_light_west = TrafficLight("West")
 traffic_lights = [traffic_light_north, traffic_light_south, traffic_light_east, traffic_light_west]
 
-def print_states():
+def print_states(cars):
     print(f"clock: {CLOCK}")
-    print(f"            NORTH: {traffic_light_north.light.name}, {traffic_light_north.cars_waiting} cars            ")
-    print(f"WEST: {traffic_light_west.light.name}, {traffic_light_west.cars_waiting} cars            EAST: {traffic_light_east.light.name}, {traffic_light_east.cars_waiting} cars")
-    print(f"            SOUTH: {traffic_light_south.light.name}, {traffic_light_south.cars_waiting} cars            ")
+    print(f"                        NORTH: {traffic_light_north.light.name}, cars: {cars[0]} arriving, {traffic_light_north.cars_waiting} remaining           ")
+    print("\n")
+    print(f"WEST: {traffic_light_west.light.name}, cars: {cars[3]} arriving, {traffic_light_west.cars_waiting} remaining            EAST: {traffic_light_east.light.name}, cars: {cars[2]} arriving, {traffic_light_east.cars_waiting} remaining")
+    print("\n")
+    print(f"                        SOUTH: {traffic_light_south.light.name}, cars: {cars[1]} arriving, {traffic_light_south.cars_waiting} remaining            ")
     print("\n\n")
-
 
 def format_safety_monitor_outputs(output, name):
     if name == "North":
@@ -44,13 +45,15 @@ def format_safety_monitor_outputs(output, name):
 
 def execute_driver():
     global CLOCK, MAX_CLOCK, MIN_CAR_ARRIVING, MAX_CAR_ARRIVING
+
+    cars = [0, 0, 0, 0] 
     while CLOCK < MAX_CLOCK:
         # all components emit outputs
         controller_out = controller.emit_output()
         traffic_light_outputs = [traffic_light.emit_output() for traffic_light in traffic_lights]
         
         time.sleep(1)
-        print_states()
+        print_states(cars)
         
         # all components handle input
         # make carsArriving for each traffic light
