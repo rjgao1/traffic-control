@@ -60,13 +60,16 @@ def execute_driver():
         cars = [random.randint(MIN_CAR_ARRIVING, MAX_CAR_ARRIVING) for _ in range(4)]
         # all TrafficLight components handle input
         for i in range(len(traffic_lights)):
+            # If everything is good, move on
+            traffic_lights[i].handle_input((controller_out[i], cars[i]))
+            
+        for i in range(len(traffic_lights)):
             # Check safety monitor of each traffic light
             if traffic_lights[i].safety_monitor.update_state(format_safety_monitor_outputs(controller_out, traffic_lights[i].name)) == SafetyState.Danger:
                 print("Traffic Light Simulation has reached Danger state. Halting simulation...")
+                print("State at time of Error:")
+                print_states(cars)
                 return
-
-            # If everything is good, move on
-            traffic_lights[i].handle_input((controller_out[i], cars[i]))
         # Controller component handle input
         controller.handle_input(traffic_light_outputs)
 
