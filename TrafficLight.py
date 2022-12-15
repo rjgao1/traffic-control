@@ -1,4 +1,4 @@
-from Color import Color
+from States import Color
 
 class TrafficLight:
     def __init__(self):
