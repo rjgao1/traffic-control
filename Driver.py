@@ -11,6 +11,7 @@ parser.add_argument("--maxClock", type=int, default=30, help="number of clock cy
 parser.add_argument("--minCarsArriving", type=int, default=0, help="min number of cars arriving at a traffic light in a clock cycle")
 parser.add_argument("--maxCarsArriving", type=int, default=3, help="max number of cars arriving at a traffic light in a clock cycle")
 parser.add_argument("--buggyController", action="store_true", help="whether or not to execute buggy controller that will cause the safety monitor to fault")
+parser.add_argument("--sleep", action="store_true", help="if set, sleep for 1 second between each clock cycle")
 
 args = parser.parse_args()
 
@@ -62,7 +63,8 @@ def execute_driver():
         controller_out = controller.emit_output()
         traffic_light_outputs = [traffic_light.emit_output() for traffic_light in traffic_lights]
         
-        # time.sleep(1)
+        if args.sleep:
+            time.sleep(1)
         print_states(cars)
         
         # all components handle input
